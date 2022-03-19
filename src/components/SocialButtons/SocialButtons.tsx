@@ -16,10 +16,12 @@ export const TwitterButton = (props: ButtonProps<'button'>) => (
   <Button leftIcon={<TwitterIcon />} variant="default" {...props} />
 );
 
-export const SocialButtons = () => (
+const SocialButtons = () => (
   <Group position="center" sx={{ padding: 15 }}>
     <FacebookButton>Continue with Facebook</FacebookButton>
     <GoogleButton>Continue with Google</GoogleButton>
     <TwitterButton>Continue with Twitter</TwitterButton>
   </Group>
 );
+
+export default SocialButtons;
