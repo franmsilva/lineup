@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-import AuthenticationForm from '@molecules/AuthenticationForm/AuthenticationForm';
+import AuthenticationForm from '@src/components/AuthenticationForm/AuthenticationForm';
 import { useAuth } from '@src/hooks/useAuth';
 
 const Home: NextPage = () => {

@@ -14,7 +14,7 @@ import {
   Checkbox,
   Anchor,
 } from '@mantine/core';
-import { GoogleButton } from '@atoms/SocialButtons/SocialButtons';
+import { GoogleButton } from '@src/components/SocialButtons/SocialButtons';
 import { IAuthFormValues } from '@src/types/auth';
 import { useAuth } from '@src/hooks/useAuth';
 
