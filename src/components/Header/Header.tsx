@@ -13,19 +13,20 @@ import {
 } from '@mantine/core';
 import { useBooleanToggle } from '@mantine/hooks';
 
+import Logo from '@src/components/Logo';
+import { TwitterIcon } from '@src/components/SocialButtons/TwitterIcon';
+import { FacebookIcon } from '@src/components/SocialButtons/FacebookIcon';
+import { useUser } from '@src/context/user';
+
 import { useStyles } from './Header.styles';
-import Logo from '../Logo';
-import { TwitterIcon } from '../SocialButtons/TwitterIcon';
-import { FacebookIcon } from '../SocialButtons/FacebookIcon';
-import { useAuth } from '@src/hooks/useAuth';
 
 interface IHeaderProps {
   links: { link: string; label: string }[];
 }
 
 const Header = ({ links }: IHeaderProps) => {
-  const { classes, theme, cx } = useStyles();
-  const { user } = useAuth();
+  const { classes, cx } = useStyles();
+  const { user } = useUser();
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [active, setActive] = useState(links[0].link);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
@@ -83,7 +84,7 @@ const Header = ({ links }: IHeaderProps) => {
               >
                 <Group spacing={7}>
                   <Avatar
-                    src={user?.photoURL}
+                    src={user?.photoUrl}
                     alt={user?.displayName || 'Account'}
                     radius="xl"
                     size={20}

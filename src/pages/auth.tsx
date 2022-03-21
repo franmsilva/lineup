@@ -1,10 +1,10 @@
 import type { NextPage } from 'next';
 
 import AuthenticationForm from '@src/components/AuthenticationForm';
-import { useAuth } from '@src/hooks/useAuth';
+import { useUser } from '@src/context/user';
 
 const Home: NextPage = () => {
-  const { user } = useAuth();
+  const { user } = useUser();
 
   return (
     <>

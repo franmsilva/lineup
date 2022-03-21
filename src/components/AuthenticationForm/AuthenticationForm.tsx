@@ -14,9 +14,10 @@ import {
   Checkbox,
   Anchor,
 } from '@mantine/core';
+
+import AuthService from '@src/services/auth';
 import { GoogleButton } from '@src/components/SocialButtons';
 import { IAuthFormValues } from '@src/types/auth';
-import { useAuth } from '@src/hooks/useAuth';
 
 enum EAuthActions {
   Login = 'login',
@@ -47,7 +48,6 @@ const RegisterSchema = LoginSchema.extend({
 });
 
 export default function AuthenticationForm(props: PaperProps<'div'>) {
-  const { loginUser, loginGoogleUser, registerUser, logoutUser } = useAuth();
   const [type, toggle] = useToggle(EAuthActions.Login, [
     EAuthActions.Login,
     EAuthActions.Register,
@@ -68,15 +68,9 @@ export default function AuthenticationForm(props: PaperProps<'div'>) {
 
   const handleSubmit = async (values: IAuthFormValues) => {
     try {
-      const authHandler =
-        type === EAuthActions.Login ? loginUser : registerUser;
-
-      const data = await authHandler(values);
-
-      console.log(
-        '🚀 ~ file: AuthenticationForm.tsx ~ line 75 ~ handleSubmit ~ data',
-        data
-      );
+      type === EAuthActions.Login
+        ? await AuthService.emailSignIn(values)
+        : await AuthService.signUp(values);
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +83,7 @@ export default function AuthenticationForm(props: PaperProps<'div'>) {
       </Text>
 
       <Group grow mb="xl" mt="xl">
-        <GoogleButton onClick={loginGoogleUser} radius="xl">
+        <GoogleButton onClick={AuthService.googleSignIn} radius="xl">
           Google
         </GoogleButton>
       </Group>
@@ -174,7 +168,7 @@ export default function AuthenticationForm(props: PaperProps<'div'>) {
           <Button type="submit">{upperFirst(type)}</Button>
         </Group>
       </form>
-      <Button onClick={logoutUser}>Logout</Button>
+      <Button onClick={AuthService.signOut}>Logout</Button>
     </Paper>
   );
 }
