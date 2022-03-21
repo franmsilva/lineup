@@ -1,4 +1,8 @@
-import { TAuthError } from '@src/types/auth';
+import {
+  AuthError as FirebaseAuthError,
+  MultiFactorError,
+} from 'firebase/auth';
+import { FirestoreError } from 'firebase/firestore';
 
 interface Ok<T> {
   readonly ok: true;
@@ -27,10 +31,22 @@ export const isOk = <T, E>(val: Result<T, E>): val is Ok<T> => val.ok;
 export const isErr = <T, E>(val: Result<T, E>): val is Err<E> =>
   val.ok === false;
 
+interface FirebaseStandardError {
+  code: string;
+  message: string;
+  name: string;
+}
+
+type TFirebaseError =
+  | FirebaseAuthError
+  | FirebaseStandardError
+  | MultiFactorError
+  | FirestoreError;
+
 export const handleFirebasePromise = async <TData>(
   promise: Promise<TData>
-): Promise<Result<TData, TAuthError>> => {
+): Promise<Result<TData, TFirebaseError>> => {
   return promise
     .then((data: TData) => createOk(data))
-    .catch((error: TAuthError) => Promise.resolve(createErr(error)));
+    .catch((error: TFirebaseError) => Promise.resolve(createErr(error)));
 };
