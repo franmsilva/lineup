@@ -36,7 +36,10 @@ const UserContextProvider: FC = ({ children }) => {
         if (!userDoc.exists()) {
           setError(`User with id=${uid} not found!`);
         } else {
-          setUser(userDoc.data() as IUser);
+          setUser({
+            ...userDoc.data(),
+            uid,
+          } as IUser);
         }
       } else setUser(null);
     });

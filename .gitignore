@@ -39,3 +39,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# firebase 
+/src/utils/firebase/firestore/firebase-admin-service-account.json
