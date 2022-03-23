@@ -41,4 +41,4 @@ yarn-error.log*
 *.tsbuildinfo
 
 # firebase 
-/src/utils/firebase/firestore/firebase-admin-service-account.json
+/src/firebase/firebase-adminsdk.json
