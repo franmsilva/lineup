@@ -5,8 +5,6 @@ import {
 } from 'firebase/auth';
 import { handleFirebasePromise, isOk } from '@src/utils/promises';
 import { IAuthFormValues } from '@src/types/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { firestoreClientDb } from '../../firebase';
 import { capitaliseFirstLetter } from '@src/utils/strings';
 
 export const signUp =
@@ -30,12 +28,16 @@ export const signUp =
       capitaliseFirstLetter(firstName) + ' ' + capitaliseFirstLetter(lastName);
     const initials = `${firstName[0]}${lastName[0]}`.toUpperCase();
 
-    await setDoc(doc(firestoreClientDb, 'users', user.uid), {
-      displayName,
-      initials,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      photoUrl: user.phoneNumber,
+    await fetch('/api/users', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: user.uid,
+        name: displayName,
+        initials,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        photoUrl: user.phoneNumber,
+      }),
     });
 
     const emailVerification = await handleFirebasePromise(
